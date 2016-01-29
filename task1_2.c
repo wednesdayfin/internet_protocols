@@ -18,9 +18,10 @@ int main(int argc, char **argv)
     char recvline[MAXLINE + 1];
     char sendline[MAXLINE + 1];
     struct sockaddr_in servaddr;
-    char student_id[7] = "219804\n";
-    char task[11] = "1.2-binary\n";
+    char student_id[] = "219804\n";
+    char task[] = "1.2-binary\n";
 
+    printf("hello");
     // Requires IPv4 address as a command line argument
     if (argc != 2) {
         fprintf(stderr, "usage: a.out <IPaddress>\n");
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
         perror("socket error");
         return 1;
     }
+
+    printf("socket created");
 
     memset(&servaddr, 0, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
@@ -50,7 +53,11 @@ int main(int argc, char **argv)
         return 1;
     }
 
-   
+    printf("connected");
+
+    write(sockfd, student_id, 7);
+
+    write(sockfd, task, 11);
 
     // Read data from socket, at most 80 (=MAXLINE) bytes
     // The result will appear in recvline
@@ -91,12 +98,15 @@ int main(int argc, char **argv)
     }
 
     lol.a = recvline[0];
-    lol.b = ntohl((uint32_t)recvline[1]);
+    lol.b = ntohl(*(uint32_t*)(recvline+1));
     lol.c = recvline[5];
-    lol.d = ntohs((uint16_t)recvline[6]);
-    lol.e = ntohl((uint32_t)recvline[8]);
+    lol.d = ntohs(*(uint16_t*)(recvline+6));
+    lol.e = ntohl(*(uint32_t*)(recvline+8));
+
 
     output_str(recvline, MAXLINE, &lol);
+
+    int check8 = write(sockfd, recvline, MAXLINE);
 
     int check9 = read(sockfd, ptr, rem_bytes);
 
