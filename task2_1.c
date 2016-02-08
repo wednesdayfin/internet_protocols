@@ -66,49 +66,7 @@ int main(int argc, char **argv)
     int check1 = read(sockfd, recvline, MAXLINE);
     // If read return value was 0, loop terminates, without error
 
-    //luodaan tarvittava structi
-
-    struct numbers lol;
-
-    //asetetaan lolin arvot, vai pitääkö typecastaa bufferi structiksi? 
-
-    check2 = parse_str(recvline, &lol); //miksei käänny? struct lol on määritelty aiemmin
-
-    lol.b = htonl(lol.b);
-    lol.d = htons(lol.d);
-    lol.e = htonl(lol.e);
-
-    int check3 = write(sockfd, &lol.a, sizeof(lol.a));
-    int check4 = write(sockfd, &lol.b, sizeof(lol.b));
-    int check5 = write(sockfd, &lol.c, sizeof(lol.c));
-    int check6 = write(sockfd, &lol.d, sizeof(lol.d));
-    int check7 = write(sockfd, &lol.e, sizeof(lol.e));
-
-    int rem_bytes = 12;
-    char* ptr = recvline;
-
-    while (rem_bytes > 0) {
-        //recvline[n] = 0; // null terminate for printing purposes
-        n = read(sockfd, ptr, rem_bytes);
-        if (n == -1) {
-            break;
-        }
-        rem_bytes -= n;
-        ptr += n;
-    }
-
-    lol.a = recvline[0];
-    lol.b = ntohl(*(uint32_t*)(recvline+1));
-    lol.c = recvline[5];
-    lol.d = ntohs(*(uint16_t*)(recvline+6));
-    lol.e = ntohl(*(uint32_t*)(recvline+8));
-
-
-    output_str(recvline, MAXLINE, &lol);
-
-    int check8 = write(sockfd, recvline, MAXLINE);
-
-    int check9 = read(sockfd, ptr, rem_bytes);
+    printf(recvline);
 
     return 0;
 }
