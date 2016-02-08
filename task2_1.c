@@ -59,14 +59,13 @@ int main(int argc, char **argv)
 
     write(sockfd, task, 11);
 
-    // Read data from socket, at most 80 (=MAXLINE) bytes
-    // The result will appear in recvline
-    // n contains number of bytes read, or 0 on endfile,
-    // or < 0 on error
+    // luetaan ip-osoite ja portti
     int check1 = read(sockfd, recvline, MAXLINE);
     // If read return value was 0, loop terminates, without error
 
+    //luetaan ip-osoite ja portti
     printf(recvline);
 
     return 0;
 }
+
