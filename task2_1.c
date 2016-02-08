@@ -58,13 +58,22 @@ int main(int argc, char **argv)
     write(sockfd, student_id, 7);
 
     write(sockfd, task, 11);
+    
+    printf("Moro\n");
 
-    // luetaan ip-osoite ja portti
+    // luetaan ip-osoite ja portti, joko ipv4 tai ipv6
     int check1 = read(sockfd, recvline, MAXLINE);
-    // If read return value was 0, loop terminates, without error
-
-    //luetaan ip-osoite ja portti
-    printf(recvline);
+    
+    //avataan secondary socket
+    
+    //lahetetaan local address ja portti secondaryyn serverille ADDR <ip address> <port> <student ID> <newline>
+    
+    //luetaan seuraava line main socketista, ehka monta CONN-messagea
+    //jokaiseen otetaan yhteys
+    
+    //OK
+    
+    //printf(recvline);
 
     return 0;
 }
